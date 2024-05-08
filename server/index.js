@@ -13,7 +13,7 @@ app.get("/all-news", (req, res) => {
   let page = parseInt(req.query.page) || 0;
   if (pageSize === undefined || page === undefined || page <= 0) {
     page = 1;
-    pageSize = 20;
+    pageSize = 80;
   }
   //   let url = `https://newsapi.org/v2/everything?q=page=${page}&pageSize=${pageSize}&apiKey=${process.env.API_KEY}`;
   let url = `https://newsapi.org/v2/everything?q=page=${page}&pageSize=${pageSize}&apiKey=${process.env.API_KEY}`;
@@ -128,4 +128,3 @@ app.get("/country/:iso", (req, res) => {
 app.listen(3000, function () {
   console.log("Server is running at port 3000");
 });
-  
