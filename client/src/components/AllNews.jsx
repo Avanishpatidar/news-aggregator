@@ -15,7 +15,7 @@ function AllNews() {
   function handleNext() {
     setPage(page + 1)
   }
-  let pageSize = 15;
+  let pageSize = 6;
   useEffect(() => {
     fetch(`http://localhost:3000/all-news?page=${page}&pageSize=${pageSize}`)
       .then(response => {

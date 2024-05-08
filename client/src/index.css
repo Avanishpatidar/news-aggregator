@@ -45,8 +45,9 @@ body {
 }
 
 nav {
-    background-color: var(--primary);
+    /* background-color: var(--primary); */
     height: 70px;
+
 }
 
 .heading {

@@ -19,7 +19,7 @@ function TopHeadlines() {
   function handleNext() {
     setPage(page + 1)
   }
-  let pageSize = 15;
+  let pageSize = 6;
   useEffect(() => {
     setIsLoading(true); 
     fetch(`http://localhost:3000/top-headlines?language=en&category=${category}&page=${page}&pageSize=${pageSize}`)

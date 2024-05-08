@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Search from "./Search";
+// import Search from "./Search";
 import { Link } from 'react-router-dom'
 import countries from "./countries";
 import downArrow from './../assets/downarrow.png'
@@ -43,7 +43,7 @@ function Header() {
   // })()
   return (
     <header className="">
-      <nav className="navigation flex flex-row sm:justify-around items-center xs:justify-between xs:px-3">
+     <nav className="navigation flex flex-row sm:justify-around items-center xs:justify-between xs:px-3">
         <h3 className="heading font-bold md:basis-1/6 text-2xl xs:basis-4/12 z-50">News App</h3>
 
         <ul className={active ? "nav-ul flex gap-11 md:gap-14 xs:gap-12 lg:basis-3/6 md:basis-4/6 md:justify-end active" : " nav-ul flex gap-14 lg:basis-3/6 md:basis-4/6 justify-end"}>
