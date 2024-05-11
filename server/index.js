@@ -13,7 +13,7 @@ app.get("/all-news", (req, res) => {
   let page = parseInt(req.query.page) || 0;
   if (pageSize === undefined || page === undefined || page <= 0) {
     page = 1;
-    pageSize = 40;
+    pageSize = 80;
   }
 
   let url = `https://newsapi.org/v2/everything?q=page=${page}&pageSize=${pageSize}&apiKey=${process.env.API_KEY}`;

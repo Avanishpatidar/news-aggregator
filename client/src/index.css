@@ -28,7 +28,6 @@
 
 }
 
-/* Common */
 * {
     color: var(--txt);
 }
@@ -36,17 +35,9 @@
 html {
     scroll-behavior: smooth;
 }
-/* 
-body {
-    background-color: var(--background); */
-    /* /* max-height: 100vh; */
-    /* min-height: 1000px;
-    background-image: url("https://tailwindcss.com/_next/static/media/hero-dark@90.dba36cdf.jpg");
-    background-attachment: fixed;
-/* } */ 
 
 body {
-    /* background-image: url("https://tailwindcss.com/_next/static/media/hero-dark@90.dba36cdf.jpg"); */
+ 
     background:var(--background);
     background-size: cover;
     background-position: center;
@@ -60,7 +51,7 @@ body {
 }
 
 nav {
-    /* background-color: var(--primary); */
+   
     height: 70px;
     backdrop-filter: blur(4px);
     border-bottom: 0.1px solid grey;
@@ -73,10 +64,7 @@ nav {
 nav ul {
     min-width: 378px;
 }
-/* nav ul:hover{
-    border-bottom:1px solid blue;
-} */
-/* Dropdown menu */
+
 
 .dropdown-li {
     position: relative;
@@ -99,7 +87,6 @@ ul li ul {
     min-width: 250px;
     text-align: left;
     padding-top: 20px;
-    /* box-shadow: 0px 3px 5px -1px #ccc; */
     box-shadow: 0px 3px 5px -1px var(--heading);
 }
 
@@ -218,8 +205,6 @@ ul li ul li a:hover {
 .search-box {
     background: var(--primary);
     height: 50px;
-    /* border: 1px solid var(--search-box-border); */
-    /* background-color: #E2E8F0; */
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
 }
@@ -243,13 +228,12 @@ ul li ul li a:hover {
     color: var(--btn-color);
     width: 130.51px;
     height: 50px;
-    /* margin-left: -2px; */
     border-radius: 34px;
 }
 
-/* Everything Card  */
+
 .cards {
-    /* line-break: anywhere; */
+  
 }
 
 .everything-card {
@@ -257,16 +241,12 @@ ul li ul li a:hover {
     height:500px;
     overflow:hidden;
     border-radius: 10px;
-    /* background: var(--primary); */
-    /* backdrop-filter:4px; */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 .everything-card:hover{
     transform: translateY(-2px);
-    
     transition: transform 0.2s ease-in-out;
     background:var(--primary);
-    /* box-shadow:2px white; */
     box-shadow: 0 0 11px grey; 
 
 }
@@ -342,7 +322,6 @@ footer {
     padding : 0; 
     align-items: center;
 }
-/* HTML: <div class="loader"></div> */
 .loader {
     width: 50px;
     aspect-ratio: 1;
