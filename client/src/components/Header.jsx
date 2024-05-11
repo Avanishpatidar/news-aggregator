@@ -15,7 +15,7 @@ function Header() {
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
 
   const [theme, setTheme] = useState("light-theme");
-  let category = ["business", "entertainment", "general", "health", "science", "sports", "technology","policies"]
+  let category = ["business", "entertainment", "general", "health", "science", "sports", "technology","politics"]
   useEffect(() => {
     document.body.className = theme;
   }, [theme])
