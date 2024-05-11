@@ -240,23 +240,33 @@ ul li ul li a:hover {
     width: 400px;
     height:500px;
     overflow:hidden;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+    box-shadow: 
+    0 0 10px rgba(0, 0, 0,0.5), /* Top-left corner */
+    0 0 10px rgba(0, 0, 0,0.5), /* Top-right corner */
+    0 0 10px rgba(0, 0, 0,0.5), /* Bottom-left corner */
+    0 0 10px rgba(0, 0, 0,0.5)
 }
 .everything-card:hover{
     transform: translateY(-2px);
     transition: transform 0.2s ease-in-out;
     background:var(--primary);
     box-shadow: 0 0 11px grey; 
-
+    
 }
 .everything-card-img {
     width: 280px;
     height: 150px;
-    object-fit: contain;
-
+    /* object-fit: contain; */
+    border-radius:10px;
 }
-
+.title{
+    font-family: "Freeman", sans-serif;
+    /* text-transform: uppercase; */
+    font-weight: 400;
+    font-size:22px;
+}
 footer {
     color: var(--btn-color);
     background: var(--heading);
