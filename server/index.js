@@ -1,123 +1,130 @@
+require("dotenv").config();
+const express = require("express");
 const axios = require("axios");
+const cors = require("cors");
+const app = express();
 
-// Handler function for serverless environment
-module.exports = async (req, res) => {
-  // Add CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+app.use(cors());
 
-  // Check for preflight requests (OPTIONS) and return early
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+app.use(express.urlencoded({ extended: true }));
+
+app.get("/all-news", (req, res) => {
+  let pageSize = parseInt(req.query.pageSize) || 0;
+  let page = parseInt(req.query.page) || 0;
+  if (pageSize === undefined || page === undefined || page <= 0) {
+    page = 1;
+    pageSize = 80;
   }
 
-  // Parse request parameters
-  const { path, query } = req;
-
-  // Handle different paths
-  switch (path) {
-    case '/all-news':
-      return getAllNews(query, res);
-    case '/top-headlines':
-      return getTopHeadlines(query, res);
-    case '/country/:iso':
-      return getCountryNews(req.params.iso, query, res);
-    default:
-      return res.status(404).json({ error: 'Route not found' });
-  }
-};
-
-// Helper function to fetch all news
-async function getAllNews(query, res) {
-  let pageSize = parseInt(query.pageSize) || 80;
-  let page = parseInt(query.page) || 1;
-
-  try {
-    const response = await axios.get(`https://newsapi.org/v2/everything`, {
-      params: {
-        q: 'page',
-        pageSize,
-        page,
-        apiKey: process.env.API_KEY
+  let url = `https://newsapi.org/v2/everything?q=page=${page}&pageSize=${pageSize}&apiKey=${process.env.API_KEY}`;
+  axios
+    .get(url)
+    .then((response) => {
+      if (response.data.totalResults > page) {
+        res.json({
+          status: 200,
+          success: true,
+          message: "Successfully fetched the data",
+          data: response.data,
+        });
+      } else {
+        res.json({
+          status: 200,
+          success: true,
+          message: "No more results to show",
+        });
       }
+    })
+    .catch(function (error) {
+      // handle error
+      res.json({
+        status: 500,
+        success: false,
+        message: "Failed to fetch Data form the API",
+        error: error,
+      });
     });
+});
+app.options("/top-headlines", cors());
 
-    return handleResponse(response, res);
-  } catch (error) {
-    return handleError(error, res);
+app.get("/top-headlines", (req, res) => {
+  let pageSize = parseInt(req.query.pageSize) || 0;
+  let page = parseInt(req.query.page) || 0;
+  let category = req.query.category || "business";
+  if (pageSize === undefined || page === undefined || page <= 0) {
+    page = 1;
+    pageSize = 80;
   }
-}
-
-// Helper function to fetch top headlines
-async function getTopHeadlines(query, res) {
-  let pageSize = parseInt(query.pageSize) || 80;
-  let page = parseInt(query.page) || 1;
-  let category = query.category || 'business';
-
-  try {
-    const response = await axios.get(`https://newsapi.org/v2/top-headlines`, {
-      params: {
-        category,
-        language: 'en',
-        page,
-        pageSize,
-        apiKey: process.env.API_KEY
+  let url = `https://newsapi.org/v2/top-headlines?category=${category}&language=en&page=${page}&pageSize=${pageSize}&apiKey=${process.env.API_KEY}`;
+  axios
+    .get(url)
+    .then((response) => {
+      if (response.data.totalResults > page) {
+        res.json({
+          status: 200,
+          success: true,
+          message: "Successfully fetched the data",
+          data: response.data,
+        });
+      } else {
+        res.json({
+          status: 200,
+          success: true,
+          message: "No more results to show",
+        });
       }
+    })
+    .catch(function (error) {
+      // handle error
+      res.json({
+        status: 500,
+        success: true,
+        message: "Failed to fetch Data form the API",
+        error: error,
+      });
     });
+});
 
-    return handleResponse(response, res);
-  } catch (error) {
-    return handleError(error, res);
+app.options("/country/:iso", cors());
+
+app.get("/country/:iso", (req, res) => {
+  let pageSize = parseInt(req.query.pageSize) || 0;
+  let page = parseInt(req.query.page) || 0;
+  if (pageSize === undefined || page === undefined || page <= 0) {
+    page = 1;
+    pageSize = 80;
   }
-}
-
-// Helper function to fetch news by country
-async function getCountryNews(iso, query, res) {
-  let pageSize = parseInt(query.pageSize) || 80;
-  let page = parseInt(query.page) || 1;
-
-  try {
-    const response = await axios.get(`https://newsapi.org/v2/top-headlines`, {
-      params: {
-        country: iso,
-        page,
-        pageSize,
-        apiKey: process.env.API_KEY
+  const country = req.params.iso; // provide The 2-letter ISO 3166-1 code of the country
+  let url = `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${process.env.API_KEY}&page=${page}&pageSize=${pageSize}`;
+  axios
+    .get(url)
+    .then((response) => {
+      if (response.data.totalResults > page) {
+        res.json({
+          status: 200,
+          success: true,
+          message: "Successfully fetched the data",
+          data: response.data,
+        });
+      } else {
+        res.json({
+          status: 200,
+          success: true,
+          message: "No more results to show",
+        });
       }
+    })
+    .catch(function (error) {
+      // handle error
+      res.json({
+        status: 500,
+        success: true,
+        message: "Failed to fetch Data form the API",
+        error: error,
+      });
     });
+});
 
-    return handleResponse(response, res);
-  } catch (error) {
-    return handleError(error, res);
-  }
-}
-
-// Helper function to handle API response
-function handleResponse(response, res) {
-  if (response.data.totalResults > 0) {
-    return res.json({
-      status: 200,
-      success: true,
-      message: 'Successfully fetched the data',
-      data: response.data
-    });
-  } else {
-    return res.json({
-      status: 200,
-      success: true,
-      message: 'No more results to show'
-    });
-  }
-}
-
-// Helper function to handle API errors
-function handleError(error, res) {
-  console.error('Failed to fetch data from the API:', error);
-  return res.status(500).json({
-    status: 500,
-    success: false,
-    message: 'Failed to fetch data from the API',
-    error: error.message
-  });
-}
+app.listen(3000, function () {
+  console.log("Server is running at port 3000");
+});
