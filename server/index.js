@@ -25,7 +25,7 @@ async function makeApiRequest(url) {
       data: response.data,
     };
   } catch (error) {
-    console.error("API request error:", error);
+    console.error("API request error:", error.response ? error.response.data : error);
     return {
       status: 500,
       success: false,
@@ -38,8 +38,9 @@ async function makeApiRequest(url) {
 app.get("/all-news", async (req, res) => {
   let pageSize = parseInt(req.query.pageSize) || 80;
   let page = parseInt(req.query.page) || 1;
+  let q = req.query.q || 'world'; // Default search query if none provided
 
-  let url = `https://newsapi.org/v2/everything?page=${page}&pageSize=${pageSize}&apiKey=${process.env.API_KEY}`;
+  let url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(q)}&page=${page}&pageSize=${pageSize}&apiKey=${process.env.API_KEY}`;
   const result = await makeApiRequest(url);
   res.status(result.status).json(result);
 });
@@ -47,7 +48,7 @@ app.get("/all-news", async (req, res) => {
 app.get("/top-headlines", async (req, res) => {
   let pageSize = parseInt(req.query.pageSize) || 80;
   let page = parseInt(req.query.page) || 1;
-  let category = req.query.category || "business";
+  let category = req.query.category || "general";
 
   let url = `https://newsapi.org/v2/top-headlines?category=${category}&language=en&page=${page}&pageSize=${pageSize}&apiKey=${process.env.API_KEY}`;
   const result = await makeApiRequest(url);
